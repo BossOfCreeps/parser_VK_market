@@ -4,6 +4,7 @@
 * ``omsk_drug`` - животных с скаченной страницы сайта https://dog-omsk.ru/
 * ``photos`` - фотографий в альбоме ВК
 * ``posts`` - постов стены группы ВК
-* ``instagram_posts`` - постов стены Instagram
+* ``instagram_posts`` - постов стены Instagram  
+* ``vladik_umka`` - животных с скаченной страницы сайта https://fondymka.ru/  
 
 В качестве технллогий используется beautifulsoup4 и selenium
