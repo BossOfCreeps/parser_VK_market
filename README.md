@@ -6,5 +6,6 @@
 * ``posts`` - постов стены группы ВК
 * ``instagram_posts`` - постов стены Instagram  
 * ``vladik_umka`` - животных с скаченной страницы сайта https://fondymka.ru/  
+* ``pesikot65`` - животных с скаченной страницы сайта https://pesikot65.ru/  
 
 В качестве технллогий используется beautifulsoup4 и selenium
