@@ -25,7 +25,7 @@ for product_url in [market_row.find("a")["href"] for market_row in soup.find_all
 
     description = market_item_description.text.strip()
 
-    title = soup.find("div", class_="market_item_title").text
+    title = soup.find("div", class_="market_item_title").text.strip()
 
     # create folder
     if not os.path.exists(title):
@@ -37,7 +37,7 @@ for product_url in [market_row.find("a")["href"] for market_row in soup.find_all
     # for all image
     for number, _ in enumerate(soup.find_all("div", class_="market_item_thumb")):
         # hover cropped image, reload html and save image
-        ActionChains(driver).move_to_element(driver.find_element_by_id(f'market_item_thumb{number}')).perform()
+        ActionChains(driver).move_to_element(driver.find_element("id", f'market_item_thumb{number}')).perform()
         soup = BeautifulSoup(driver.page_source, 'lxml')
         img_link = soup.find("img", id="market_item_photo")["src"].replace("amp;", "")
         img_data = requests.get(img_link).content
