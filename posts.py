@@ -7,7 +7,7 @@ from selenium import webdriver
 from selenium.webdriver import ActionChains
 from selenium.webdriver.common.by import By
 
-url = r"https://vk.com/koshkindom_tlt"
+url = r"https://vk.com/my_friend_ulsk"
 vk_url = r"https://vk.com"
 
 driver = webdriver.Chrome("chromedriver.exe")
@@ -27,6 +27,7 @@ while True:
         break
     last_height = new_height
     soup = BeautifulSoup(driver.execute_script("return document.body.innerHTML;"), 'lxml')
+    print(len(soup.find_all('a', class_='post_link')))
     if len(soup.find_all('a', class_='post_link')) > 2000:
         break
 
@@ -42,6 +43,9 @@ for post_number, post_a in enumerate(soup.find_all('a', class_='post_link')):
 
         description = soup2.find("div", class_="wall_post_text").text
 
+        if "#возьмикота" not in description.lower():
+            continue
+
         if not os.path.exists(str(post_number)):
             os.mkdir(str(post_number))
 
@@ -55,9 +59,13 @@ for post_number, post_a in enumerate(soup.find_all('a', class_='post_link')):
         for photo_number, el in enumerate(photos_0 + photos_1 + photos_2):
             ActionChains(driver).move_to_element(el).click().perform()
             sleep(1)
-            ActionChains(driver).move_to_element(
-                driver.find_element(By.CLASS_NAME, "UnauthActionBox__close")).click().perform()
-            sleep(1)
+            try:
+                ActionChains(driver).move_to_element(
+                    driver.find_element(By.CLASS_NAME, "UnauthActionBox__close")
+                ).click().perform()
+                sleep(1)
+            except:
+                pass
             soup3 = BeautifulSoup(driver.page_source, 'lxml')
             url = soup3.find("div", class_="pv_photo_wrap").find("img")["src"]
             with open(f'{post_number}/{photo_number}.jpg', 'wb') as handler:

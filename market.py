@@ -5,7 +5,7 @@ from bs4 import BeautifulSoup
 from selenium import webdriver
 from selenium.webdriver import ActionChains
 
-url = r"https://vk.com/market-115570974"
+url = r"https://vk.com/market-180581210"
 vk_url = r"https://vk.com"
 
 driver = webdriver.Chrome("chromedriver.exe")
@@ -20,6 +20,7 @@ for i, product_url in enumerate([row.find("a")["href"] for row in soup.find_all(
     market_item_description = None
     while market_item_description is None:
         driver.get(vk_url + product_url)
+        print(vk_url + product_url)
         sleep(1)
         soup = BeautifulSoup(driver.page_source, 'lxml')
         market_item_description = soup.find("div", id="market_item_description")
