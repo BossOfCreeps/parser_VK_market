@@ -32,7 +32,7 @@ while True:
 sleep(2)
 soup = BeautifulSoup(driver.execute_script("return document.body.innerHTML;"), 'lxml')
 
-for number, photos_row in enumerate(soup.find_all('div', class_='photos_row')[665:], start=1000):
+for number, photos_row in enumerate(soup.find_all('div', class_='photos_row')):
     try:
         folder = "dogs_"
         if not os.path.exists(str(folder)):

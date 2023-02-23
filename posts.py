@@ -27,14 +27,14 @@ while True:
         break
     last_height = new_height
     soup = BeautifulSoup(driver.execute_script("return document.body.innerHTML;"), 'lxml')
-    print(len(soup.find_all('a', class_='post_link')))
-    if len(soup.find_all('a', class_='post_link')) > 2000:
+    print(len(soup.find_all("a", class_="PostHeaderSubtitle__link")))  # post_link PostHeaderSubtitle__link
+    if len(soup.find_all('a', class_='post_link')) > 500:
         break
 
 sleep(2)
 soup = BeautifulSoup(driver.execute_script("return document.body.innerHTML;"), 'lxml')
 
-for post_number, post_a in enumerate(soup.find_all('a', class_='post_link')):
+for post_number, post_a in enumerate(soup.find_all("a", class_="PostHeaderSubtitle__link")):
     try:
         print(post_number)
         driver.get(vk_url + post_a["href"])
@@ -43,7 +43,7 @@ for post_number, post_a in enumerate(soup.find_all('a', class_='post_link')):
 
         description = soup2.find("div", class_="wall_post_text").text
 
-        if "#возьмикота" not in description.lower():
+        if "188" not in description.lower():
             continue
 
         if not os.path.exists(str(post_number)):
