@@ -7,7 +7,7 @@ from selenium import webdriver
 from selenium.webdriver import ActionChains
 from selenium.webdriver.common.by import By
 
-url = r"https://vk.com/my_friend_ulsk"
+url = r"https://vk.com/kdsevastopol"
 vk_url = r"https://vk.com"
 
 driver = webdriver.Chrome("chromedriver.exe")
@@ -19,6 +19,7 @@ input("НАЖИМИТЕ ЧТО-НИБУДЬ")
 # Get scroll height
 last_height = driver.execute_script("return document.body.scrollHeight")
 
+links = []
 while True:
     driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
     sleep(SCROLL_PAUSE_TIME)
@@ -27,14 +28,15 @@ while True:
         break
     last_height = new_height
     soup = BeautifulSoup(driver.execute_script("return document.body.innerHTML;"), 'lxml')
-    print(len(soup.find_all("a", class_="PostHeaderSubtitle__link")))  # post_link PostHeaderSubtitle__link
-    if len(soup.find_all('a', class_='post_link')) > 500:
+    links = soup.find("div", id="page_search_posts").find_all("a", class_="PostHeaderSubtitle__link")
+    print(len(links))
+    if len(links) > 300:
         break
 
 sleep(2)
 soup = BeautifulSoup(driver.execute_script("return document.body.innerHTML;"), 'lxml')
 
-for post_number, post_a in enumerate(soup.find_all("a", class_="PostHeaderSubtitle__link")):
+for post_number, post_a in enumerate(links):
     try:
         print(post_number)
         driver.get(vk_url + post_a["href"])
